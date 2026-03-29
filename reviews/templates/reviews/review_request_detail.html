@@ -21,7 +21,7 @@
             {% for comment in comments %}
                 <li>
                     <strong>{{ comment.rule_id }}</strong>
-                    ({{ comment.severity }}, confidence: {{ comment.confidence }})
+                    ({{ comment.severity }})
                     {% if comment.line %} — line {{ comment.line }}{% endif %}
                     <br>
                     {{ comment.message }}
