@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Review Request Detail</title>
+</head>
+<body>
+    <h1>Review Request</h1>
+
+    <p><strong>ID:</strong> {{ review_request.id }}</p>
+    <p><strong>Title:</strong> {{ review_request.title }}</p>
+    <p><strong>Filename:</strong> {{ review_request.filename }}</p>
+    <p><strong>Status:</strong> {{ review_request.status }}</p>
+
+    <h2>Submitted Code</h2>
+    <pre>{{ review_request.code }}</pre>
+
+    <h2>Comments</h2>
+    {% if comments %}
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <strong>{{ comment.rule_id }}</strong>
+                    ({{ comment.severity }}, confidence: {{ comment.confidence }})
+                    {% if comment.line %} — line {{ comment.line }}{% endif %}
+                    <br>
+                    {{ comment.message }}
+                    {% if comment.suggestion %}
+                        <br>
+                        <em>Suggestion:</em> {{ comment.suggestion }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No review comments yet.</p>
+    {% endif %}
+</body>
+</html>

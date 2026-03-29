@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Create Review Request</title>
+</head>
+<body>
+    <h1>Submit Code for Review</h1>
+
+    <form method="post" action="">
+        {% csrf_token %}
+
+        <div>
+            <label for="{{ form.title.id_for_label }}">Title</label><br>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div>{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+
+        <br>
+
+        <div>
+            <label for="{{ form.filename.id_for_label }}">Filename</label><br>
+            {{ form.filename }}
+            {% if form.filename.errors %}
+                <div>{{ form.filename.errors }}</div>
+            {% endif %}
+        </div>
+
+        <br>
+
+        <div>
+            <label for="{{ form.code.id_for_label }}">Code</label><br>
+            {{ form.code }}
+            {% if form.code.errors %}
+                <div>{{ form.code.errors }}</div>
+            {% endif %}
+        </div>
+
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
