@@ -15,6 +15,13 @@ SEVERITY_LOW = "low"
 SEVERITY_HIGH = "high"
 
 SEVERITY_CHOICES = [
-        (SEVERITY_LOW, "Low"),
-        (SEVERITY_HIGH, "High"),
-    ]
+    (SEVERITY_LOW, "Low"),
+    (SEVERITY_HIGH, "High"),
+]
+
+SOURCE_PARSER = "parser"
+SOURCE_LLM = "llm"
+SOURCES_CHOICES = [
+    (SOURCE_PARSER, "Parser"),
+    (SOURCE_LLM, "LLM"),
+]

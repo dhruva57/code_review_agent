@@ -2,6 +2,7 @@ import json
 import subprocess
 
 from reviews.constants.constants import NODE_ANALYZER_DIR, NODE_ANALYZER_SCRIPT
+from reviews.constants.fields import SOURCE_PARSER
 from reviews.models import ReviewComment
 
 
@@ -70,6 +71,7 @@ def run_node_analyzer(code, filename):
 def normalise_finding(finding, review_request, filename):
     return {
         "rule_id": str(finding.get("rule_id") or "unknown-rule"),
+        "source": SOURCE_PARSER,
         "severity": str(finding.get("severity") or "low"),
         "file": str(finding.get("file") or filename),
         "line": finding.get("line"),
@@ -79,10 +81,11 @@ def normalise_finding(finding, review_request, filename):
     }
 
 
-def create_review_comments(review_request, findings, filename):
+def save_parser_findings(review_request, findings, filename):
     comments = [
         ReviewComment(
             review_request=item["review_request"],
+            source=SOURCE_PARSER,
             rule_id=item["rule_id"],
             severity=item["severity"],
             file=item["file"],
@@ -100,6 +103,7 @@ def create_review_comments(review_request, findings, filename):
             ReviewComment(
                 review_request=review_request,
                 rule_id="no-issues-detected-yet",
+                source=SOURCE_PARSER,
                 severity="low",
                 file=filename,
                 line=None,
@@ -117,10 +121,11 @@ def run_parser_review(review_request):
 
     review_request.comments.all().delete()
 
-    findings = run_node_analyzer(code=code, filename=filename)
-    return create_review_comments(
-        review_request=review_request, findings=findings, filename=filename
+    parser_findings = run_node_analyzer(code=code, filename=filename)
+    save_parser_findings(
+        review_request=review_request, findings=parser_findings, filename=filename
     )
+    return parser_findings
 
 
 def run_manual_review(review_request):

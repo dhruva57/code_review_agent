@@ -20,6 +20,7 @@
         <ul>
             {% for comment in comments %}
                 <li>
+                    <strong>{{ comment.source|upper }}</strong>
                     <strong>{{ comment.rule_id }}</strong>
                     ({{ comment.severity }})
                     {% if comment.line %} — line {{ comment.line }}{% endif %}
